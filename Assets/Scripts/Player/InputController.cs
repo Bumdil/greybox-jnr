@@ -9,10 +9,12 @@ public class InputController : MonoBehaviour {
     public float moveForce = 365f;
     public float jumpForce = 1000f;
     public float maxSpeed = 15;
-    public Transform groundCheck;
+    public Transform rightFoot;
+    public Transform leftFoot;
 
-    public bool isOnGround;
+    private bool isOnGround;
     private bool isRestarting;
+    private float jumpDelay = 0.5f;
     private GameObject interactedObject;
     private Rigidbody rb;
 
@@ -47,11 +49,17 @@ public class InputController : MonoBehaviour {
     private void Update()
     {
         //Ground Check
-        isOnGround = Physics.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        isOnGround = Physics.Linecast(transform.position, rightFoot.position, 1 << LayerMask.NameToLayer("Ground")) || 
+                     Physics.Linecast(transform.position, leftFoot.position, 1 << LayerMask.NameToLayer("Ground"));
 
-        if (Input.GetAxis("Jump") > 0 && isOnGround)
+        //avoid multiple triggers of jump
+        if (jumpDelay > 0f)
+            jumpDelay -= Time.deltaTime;
+
+        if (Input.GetAxis("Jump") > 0 && isOnGround && jumpDelay <= 0f)
         {
             jump = true;
+            jumpDelay = 0.5f;
         }
         if (Input.GetAxis("Use") > 0 && interactedObject)        {
             //trigger action associated with the object
