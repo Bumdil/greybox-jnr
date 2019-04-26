@@ -81,6 +81,13 @@ public class InputController : MonoBehaviour {
         {
             interactedObject = other.gameObject;
         }
+
+        if (other.tag == "Finish")
+        {
+            Debug.Log("Game Over. You won!");
+            this.enabled = false;
+            StartCoroutine(RestartScene(3));
+        }
     }
 
     private void OnTriggerExit(Collider other)
