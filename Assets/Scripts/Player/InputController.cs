@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour {
     [Range(0, 100)]
     public float jumpHeight = 30;
     private bool isOnGround;
+    public GameObject interactedObject;
     private BoxCollider trigger;
     private Rigidbody rb;
 
@@ -34,9 +35,10 @@ public class InputController : MonoBehaviour {
             rb.velocity = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, 0);
             //Debug.Log("Input: " + Input.GetAxis("Horizontal"));
         }
-        if (Input.GetAxis("Use") > 0)
-        {
-            //use object
+        if (Input.GetAxis("Use") > 0 && interactedObject)        {
+            //trigger action associated with the object
+            interactedObject.GetComponent<InteractiveObject>().Interact(this.gameObject);
+            interactedObject = null;
         }
         if (Input.GetAxis("Restart") > 0)
         {
@@ -51,6 +53,11 @@ public class InputController : MonoBehaviour {
         {
             isOnGround = true;
         }
+
+        if (other.tag == "Object")
+        {
+            interactedObject = other.gameObject;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -58,6 +65,11 @@ public class InputController : MonoBehaviour {
         if (other.tag == "Ground")
         {
             isOnGround = false;
+        }
+
+        if (other.tag == "Object")
+        {
+            interactedObject = null;
         }
     }
 }

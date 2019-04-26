@@ -271,7 +271,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: f4036b8a0ae1fcd47bba1d4ae6aeb480, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: -5.23
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f4036b8a0ae1fcd47bba1d4ae6aeb480, type: 3}
       propertyPath: m_LocalPosition.y
@@ -477,6 +477,10 @@ Prefab:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: 2aec9589bb279414987b25c7ec2ca266, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2aec9589bb279414987b25c7ec2ca266, type: 3}
   m_IsPrefabParent: 0
@@ -637,6 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   jumpHeight: 50
+  interactedObject: {fileID: 0}
 --- !u!1 &1417977975 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100004, guid: e3b1026b6f452f94f9e901775be9df33, type: 3}
@@ -680,7 +685,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1600506875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 49, y: -0.5, z: 0}
+  m_LocalPosition: {x: 35.04, y: -0.5, z: 0}
   m_LocalScale: {x: 100, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1126406436}
@@ -750,9 +755,10 @@ GameObject:
   - component: {fileID: 1603502243}
   - component: {fileID: 1603502242}
   - component: {fileID: 1603502241}
+  - component: {fileID: 1603502244}
   m_Layer: 0
   m_Name: Lever
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -823,6 +829,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1603502239}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1603502244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1603502239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0469395280b5c6a4ebb348e74f42009f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 1622181507}
+  wheel: {fileID: 1691051066}
 --- !u!1 &1622181506
 GameObject:
   m_ObjectHideFlags: 0
