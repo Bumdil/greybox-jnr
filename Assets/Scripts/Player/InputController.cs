@@ -1,59 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InputController : MonoBehaviour {
 
-    [Range(0,100)]
-    public float speed = 15;
-    [Range(0, 100)]
-    public float jumpHeight = 30;
-    private bool isOnGround;
-    public GameObject interactedObject;
-    private BoxCollider trigger;
+    [HideInInspector] public bool jump = false;
+    public float moveForce = 365f;
+    public float jumpForce = 1000f;
+    public float maxSpeed = 15;
+    public Transform groundCheck;
+
+    public bool isOnGround;
+    private bool isRestarting;
+    private GameObject interactedObject;
     private Rigidbody rb;
 
-    private void Start()
+    // Use this for initialization
+    void Awake()
     {
-        trigger = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
         isOnGround = true;
     }
 
+    // Handle Physics, i.e. movement in x and y
+    void FixedUpdate()
+    {
+        //horizontal movement
+        float h = Input.GetAxis("Horizontal");
+
+        if (h * rb.velocity.x < maxSpeed && isOnGround)
+            rb.AddForce(Vector2.right * h * moveForce);
+
+        if (Mathf.Abs(rb.velocity.x) > maxSpeed)
+            rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
+
+        //jumping
+        if (jump)
+        {
+            rb.AddForce(new Vector2(0f, jumpForce));
+            jump = false;
+        }
+    }
+
+    // Handle Input
     private void Update()
     {
+        //Ground Check
+        isOnGround = Physics.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
         if (Input.GetAxis("Jump") > 0 && isOnGround)
         {
-            //jump
-            rb.AddForce(new Vector3(0, Input.GetAxis("Jump") * jumpHeight * 20, 0));
-            //Debug.Log("Jump!!");
-        }
-        else if (Input.GetAxis("Horizontal") != 0 && isOnGround)
-        {
-            //go right/left
-            rb.velocity = new Vector3(Input.GetAxis("Horizontal") * speed, rb.velocity.y, 0);
-            //Debug.Log("Input: " + Input.GetAxis("Horizontal"));
+            jump = true;
         }
         if (Input.GetAxis("Use") > 0 && interactedObject)        {
             //trigger action associated with the object
             interactedObject.GetComponent<InteractiveObject>().Interact(this.gameObject);
             interactedObject = null;
         }
-        if (Input.GetAxis("Restart") > 0)
+        if (Input.GetAxis("Restart") > 0 && !isRestarting)
         {
             //restart level
+            Debug.Log("Player initiated Restart!");
+
+            StartCoroutine(RestartScene(0));
+        }
+
+        // reset if player fell off map
+        if (transform.position.y < -1f && !isRestarting)
+        {
+            Debug.Log("You fell off the map. The game will be restarting!");
+            StartCoroutine(RestartScene(1));
         }
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Ground")
-        {
-            isOnGround = true;
-        }
-
         if (other.tag == "Object")
         {
             interactedObject = other.gameObject;
@@ -62,14 +85,18 @@ public class InputController : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Ground")
-        {
-            isOnGround = false;
-        }
-
         if (other.tag == "Object")
         {
             interactedObject = null;
         }
     }
+
+    private IEnumerator RestartScene(float delay)
+    {
+        isRestarting = true;
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("scene");
+        isRestarting = false;
+    }
+
 }
