@@ -204,6 +204,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114474724227849880, guid: dce4cdf304a973f41944c5c8af305c12,
+        type: 2}
+      propertyPath: jumpForce
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 114474724227849880, guid: dce4cdf304a973f41944c5c8af305c12,
+        type: 2}
+      propertyPath: moveForce
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 114474724227849880, guid: dce4cdf304a973f41944c5c8af305c12,
+        type: 2}
+      propertyPath: maxSpeed
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dce4cdf304a973f41944c5c8af305c12, type: 2}
   m_IsPrefabParent: 0
