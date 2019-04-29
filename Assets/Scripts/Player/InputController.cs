@@ -14,7 +14,7 @@ public class InputController : MonoBehaviour {
 
     private bool isOnGround;
     private bool isRestarting;
-    private float jumpDelay = 0.5f;
+    private float jumpDelay = 0f;
     private GameObject interactedObject;
     private Rigidbody rb;
 
@@ -59,7 +59,7 @@ public class InputController : MonoBehaviour {
         if (Input.GetAxis("Jump") > 0 && isOnGround && jumpDelay <= 0f)
         {
             jump = true;
-            jumpDelay = 0.5f;
+            jumpDelay = 0.25f;
         }
         if (Input.GetAxis("Use") > 0 && interactedObject)        {
             //trigger action associated with the object

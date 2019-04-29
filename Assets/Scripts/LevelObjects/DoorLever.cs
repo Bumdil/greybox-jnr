@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : InteractiveObject
+public class DoorLever : InteractiveObject
 {
 
     public Transform door;
-    public Transform wheel;
+    public RotationController wheel;
 
     private float doorSpeed = 2;
     private bool isDoorLocked = true;
     private bool isDoorOpening = false;
 
+    /// <summary>
+    /// On each interaction change the rotation of the wheel.
+    /// On the first interaction also open the door.
+    /// </summary>
     public override void Interact(GameObject player)
     {
         Debug.Log("Interaction with Lever");
-        wheel.GetComponent<RotationController>().isClockwise = !wheel.GetComponent<RotationController>().isClockwise;
+        wheel.isClockwise = !wheel.GetComponent<RotationController>().isClockwise;
+        wheel.rotationAngle = 45;
         if (isDoorLocked && !isDoorOpening) isDoorOpening = true;
     }
 
-
+    /// <summary>
+    /// Continously open door if not opened already.
+    /// </summary>
     private void Update()
     {
         if (isDoorOpening)

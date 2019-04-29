@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 23984967338993698}
   - component: {fileID: 114387568816947216}
   m_Layer: 0
-  m_Name: Lever
+  m_Name: Door Lever
   m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,8 +278,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1450977994191414}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.62, y: 1.4, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.25, z: 0.8}
+  m_LocalPosition: {x: -16.724, y: 1.5, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.8}
   m_Children: []
   m_Father: {fileID: 4095778409380236}
   m_RootOrder: 1
