@@ -8,14 +8,16 @@ public class DoorLever : InteractiveObject
     public Transform door;
     public RotationController wheel;
 
-    private float doorSpeed = 2;
-    private bool isDoorLocked = true;
-    private bool isDoorOpening = false;
+    private float doorSpeed = 2; // speed to open door
+    private bool isDoorLocked = true; // flag: is the door still locked?
+    private bool isDoorOpening = false; //flag: is the door currently opening?
+
 
     /// <summary>
     /// On each interaction change the rotation of the wheel.
     /// On the first interaction also open the door.
     /// </summary>
+    /// <param name="player">the player object that triggered the interaction. Unnecessary in this case</param>
     public override void Interact(GameObject player)
     {
         Debug.Log("Interaction with Lever");

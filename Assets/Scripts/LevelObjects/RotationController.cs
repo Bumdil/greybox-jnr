@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class RotationController : MonoBehaviour {
 
+    [Tooltip("Indicate whether the rotation of the wheel should be clockwise or counter clockwise")]
     public bool isClockwise = true;
-    public float rotationAngle = 0;
-    private float clockwiseMultiplier = 0f;
-
-	// Add a negative 1 multiplier to rotation for counter clockwise
-	void Start () {
-        clockwiseMultiplier = (isClockwise ? -1f : 1f);
-	}
+    [HideInInspector]public float rotationAngle = 0;
+    private float clockwiseMultiplier = 0f; // is used to controll whether the rotation happens clockwise or counter clockwise.
 
     // Each second, rotate by rotationAngle.
     void Update()

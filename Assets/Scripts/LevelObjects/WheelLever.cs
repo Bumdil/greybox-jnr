@@ -15,5 +15,6 @@ public class WheelLever : InteractiveObject {
     public override void Interact(GameObject player)
     {
         wheel.rotationAngle = wheelRotationAngle;
+        Debug.Log("Start wheel rotation");
     }
 }
