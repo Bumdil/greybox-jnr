@@ -6,7 +6,8 @@ public class RotationController : MonoBehaviour {
 
     [Tooltip("Indicate whether the rotation of the wheel should be clockwise or counter clockwise")]
     public bool isClockwise = true;
-    [HideInInspector]public float rotationAngle = 0;
+    [Tooltip("Degrees per second the wheel should rotate.")]
+    public float rotationAngle = 0;
     private float clockwiseMultiplier = 0f; // is used to controll whether the rotation happens clockwise or counter clockwise.
 
     // Each second, rotate by rotationAngle.
