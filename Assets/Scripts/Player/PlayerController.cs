@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     // Handle Physics, i.e. movement in x and y directions
     void FixedUpdate()
     {
-        //horizontal movement
+        // horizontal movement
         float h = Input.GetAxis("Horizontal");
 
         if (h * rb.velocity.x < maxSpeed)
@@ -41,10 +41,17 @@ public class PlayerController : MonoBehaviour {
                 rb.AddForce(Vector3.right * h * moveForce / 30f); // in the air add reduced force to simulate less control
         }
 
+        // cap to max speed
         if (Mathf.Abs(rb.velocity.x) > maxSpeed)
             rb.velocity = new Vector3(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
 
-        //jumping
+        // prevent sliding
+        if (Mathf.Abs(h) < 0.05f && isOnGround)
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y);
+        }
+
+        // jumping
         if (isJumping)
         {
             rb.AddForce(new Vector3(0f, jumpForce));
