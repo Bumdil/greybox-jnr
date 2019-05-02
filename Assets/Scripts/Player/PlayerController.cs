@@ -33,8 +33,13 @@ public class PlayerController : MonoBehaviour {
         //horizontal movement
         float h = Input.GetAxis("Horizontal");
 
-        if (h * rb.velocity.x < maxSpeed && isOnGround)
-            rb.AddForce(Vector3.right * h * moveForce);
+        if (h * rb.velocity.x < maxSpeed)
+        {
+            if (isOnGround)
+                rb.AddForce(Vector3.right * h * moveForce); // on ground, add full move force
+            else
+                rb.AddForce(Vector3.right * h * moveForce / 30f); // in the air add reduced force to simulate less control
+        }
 
         if (Mathf.Abs(rb.velocity.x) > maxSpeed)
             rb.velocity = new Vector3(Mathf.Sign(rb.velocity.x) * maxSpeed, rb.velocity.y);
@@ -62,10 +67,10 @@ public class PlayerController : MonoBehaviour {
         CheckInputs();
 
         // reset if player fell off map
-        if (transform.position.y < -1f && !isRestarting)
+        if (transform.position.y < -5f && !isRestarting)
         {
             Debug.Log("You fell off the map. The game will be restarting!");
-            StartCoroutine(RestartScene(1));
+            StartCoroutine(RestartScene(0.5f));
         }
 
     }
@@ -87,7 +92,7 @@ public class PlayerController : MonoBehaviour {
         {
             Debug.Log("Game Over. You won!");
             this.enabled = false;
-            StartCoroutine(RestartScene(3));
+            StartCoroutine(RestartScene(2));
         }
     }
 
